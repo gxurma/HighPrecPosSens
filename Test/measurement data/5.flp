@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flowfile version="1.1">
+   <project flowversion="1.0">
+      <file filename="5-1.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF6E006E,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;120</formula>
+      </file>
+      <file filename="5-2.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-3.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-4.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-5.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-6.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-7.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-8.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-9.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-10.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-11.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-12.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-13.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-14.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-15.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-16.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-17.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-18.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-19.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+      <file filename="5-20.csv">
+         <property key="variablesettings" value="2:Time,0,0,FF161616,0,0;x,0,0,FF161616,0,0;dig,1,0,FF161616,0,1;filt,0,0,FF6E006E,0,1"/>
+         <formula>filt=(x[t-5]+x[t-4]+x[t-3]+x[t-2]+x[t-1]+x[t])/6 if t&gt;5 else x</formula>
+         <formula>dig= filt&gt;122</formula>
+      </file>
+   </project>
+</flowfile>
