@@ -5,10 +5,13 @@
   (paper "A3")
 
   (title_block
-    (title "High Precision Linear Position  Sensor")
-    (date "2022-11-03")
+    (title "High Precision Position Sensor")
+    (date "2023-01-29")
     (rev "1")
     (company "enGYneer")
+    (comment 1 "By Martin Gyurkó")
+    (comment 2 "www.gyurma.de")
+    (comment 3 "www.enGYneer.de")
   )
 
   (lib_symbols
