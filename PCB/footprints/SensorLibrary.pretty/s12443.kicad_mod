@@ -44,4 +44,9 @@
   (pad "12" smd circle (at -5.08 -0.635) (size 0.7 0.7) (property pad_prop_bga) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 2112934e-ddc6-4f65-bba1-ea77e35125ce))
   (pad "13" smd circle (at -7.62 -0.635) (size 0.7 0.7) (property pad_prop_bga) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp cf68fbb9-685e-403b-8018-b5636c806ce5))
   (pad "14" smd circle (at -10.16 -0.635) (size 0.7 0.7) (property pad_prop_bga) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 5abd0570-614b-4daa-b769-20ca0a2f2a64))
+  (model "D:/Benutzerdaten/gyurma/Documents/git/HighPrecPosSens/CAD/s12443.stp"
+    (opacity 0.8900)    (offset (xyz 0 0.375 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
 )

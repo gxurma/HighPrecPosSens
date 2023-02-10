@@ -1,0 +1,31 @@
+Solid Edge in STEP konvertieren
+Datum: Freitag,Februar 10,2023 04:53PM
+Ausgabedatei: D:\Benutzerdaten\gyurma\Documents\git\HighPrecPosSens\CAD\s12443.stp
+Autor: Unknown
+Organisation: Unknown
+Ausgangssystem: Solid Edge
+
+Hardware:
+Prozessor: AMD Ryzen 9 5950X 16-Core Processor            
+Betriebssystem: Windows 10 Professional
+Installierter Speicher: 31.90 GB
+
+Software-Informationen
+Parasolid-Version: 34.0.153
+PSBodyShop-Version: 34.0.110
+Step-Adapterversion: 9.0.92
+Solid Edge-Version: 222.00.02.003 x64
+
+STEP-Exportoptionen
+Exportformat: AP214
+Konstruktionsbleche exportieren: Aus
+Konstruktionsvolumen exportieren: Aus
+Konstruktionsdrähte exportieren: Aus
+Nur angezeigte Teile exportieren: Aus
+Einheiten: Millimeters
+Namen von Teilkomponenten exportieren als Unicode: Aus
+PMI exportieren: Aus
+
+Phase 1 von 1 - Parasolid in Fremddatentypen konvertieren...
+Konvertierungsvorgang ist abgeschlossen
+Zum Übersetzen benötigte Zeit:00 : 00 : 00
