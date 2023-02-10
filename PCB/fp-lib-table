@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "SensorLibrary")(type "KiCad")(uri "${KIPRJMOD}/footprints/SensorLibrary.pretty")(options "")(descr ""))
+)

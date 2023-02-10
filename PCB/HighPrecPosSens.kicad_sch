@@ -1,0 +1,21 @@
+(kicad_sch (version 20211123) (generator eeschema)
+
+  (uuid 74315618-56c6-49e7-b500-6378817ee091)
+
+  (paper "A3")
+
+  (title_block
+    (title "High Precision Linear Position  Sensor")
+    (date "2022-11-03")
+    (rev "1")
+    (company "enGYneer")
+  )
+
+  (lib_symbols
+  )
+
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)
