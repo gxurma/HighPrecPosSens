@@ -1,3 +1,4 @@
 (fp_lib_table
   (lib (name "SensorLibrary")(type "KiCad")(uri "${KIPRJMOD}/footprints/SensorLibrary.pretty")(options "")(descr ""))
+  (lib (name "Pico")(type "KiCad")(uri "${KIPRJMOD}/../../KiCad-RP-Pico/RP-Pico Libraries/MCU_RaspberryPi_and_Boards.pretty")(options "")(descr ""))
 )
