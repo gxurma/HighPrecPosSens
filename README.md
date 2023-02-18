@@ -25,3 +25,9 @@ In my experiments I saw that 10MHz usage is leading to higher noise levels.
 
 I recommend 5 MHz pxel clock signal, thats nicely representing the measured analog signal.
 
+
+
+## Credits to
+
+https://github.com/ncarandini/KiCad-RP-Pico.git
+
