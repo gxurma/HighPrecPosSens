@@ -1,0 +1,23 @@
+Pcb und Assembly: Checkliste
+============================
+Martin Gyurkó <martin.gyurko@engyneer.de>
+v1.0, {docdate}: valami
+:toc:
+:toclevels: 3
+:icons: font
+:doctype: article
+:chapter-label:
+:table-stripes: odd
+
+
+* [ ] Kontur
+* [ ] Bohrungen
+* [ ] Copyright 
+* [ ] Author Name
+* [ ] Device Name
+* [ ] Versionsnummer
+* [ ] JlcPcb String
+* [ ] Mounting attribute at relevant parts, Do not populate (DNP) if not needed
+* [ ] Net names on relevant and all power nets
+* [ ] Set net classes to power and signal
+* [ ] Logo!
