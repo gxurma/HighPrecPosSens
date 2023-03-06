@@ -21,3 +21,6 @@ v1.0, {docdate}: valami
 * [ ] Net names on relevant and all power nets
 * [ ] Set net classes to power and signal
 * [ ] Logo!
+* [ ] Testpunkte!
+* [ ] Stecker Footprints checken - Male / Female
+* [ ] Layer Stackup Beschreibung einfügen (Lagendicken, material etc.)
