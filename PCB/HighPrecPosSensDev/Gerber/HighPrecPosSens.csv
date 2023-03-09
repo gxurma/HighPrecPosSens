@@ -1,0 +1,29 @@
+Comment,Designator,Footprint,LCSC Part #,Mounting
+100n Unpolarized capacitor,"C1,C3,C9,C10,C13,C14,C16,C21",C_0603_1608Metric,C14663,
+10u Unpolarized capacitor,C2,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,C440198,
+100u Unpolarized capacitor,C4,C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,C15008,
+150p Unpolarized capacitor,C5,C_0603_1608Metric,C1594,
+22u Unpolarized capacitor,"C6,C7,C11,C12,C15",C_0603_1608Metric,C59461,
+1u Unpolarized capacitor,"C8,C17,C18,C19,C20",C_0603_1608Metric,C15849,
+LED Light emitting diode,"D1,D2,D3,D4,D5,D6,D7,D9,D10,D11,D12,D13,D14,D15",LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder,C72041,
+"SS36 Schottky diode, filled shape",D8,D_SMC_Handsoldering,C35722,
+Fiducial Fiducial Marker,"FID1,FID2,FID3,FID4",Fiducial_1mm_Mask2mm,,DNP
+LOGO ,G1,enGyneer-Logo,,DNP
+MountingHole_Pad Mounting Hole with connection,"H1,H2,H3,H4",MountingHole_3.2mm_M3_Pad,,DNP
+"Conn_01x02_Male Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)","J1,J2,J3,J4,J6,J7,J8",PinHeader_1x02_P2.54mm_Vertical,,DNP
+"Conn_01x06_Male Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)",J5,JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical,C144397,DNP
+10u Inductor,L1,L_Taiyo-Yuden_NR-50xx_HandSoldering,C222896,
+82 Resistor,"R1,R5,R6,R7,R8,R15,R16,R17,R18,R19,R20,R25,R26,R27,R28,R29",R_0603_1608Metric,C23255,
+47k Resistor,R2,R_0603_1608Metric,C25819,
+4.7k Resistor,R3,R_0603_1608Metric,C23162,
+2.7k Resistor,R4,R_0603_1608Metric,C13167,
+100 Resistor,R9,R_0603_1608Metric,C22775,
+3.6k Resistor,R10,R_0603_1608Metric,C22980,
+1k Resistor,"R11,R12,R13,R21,R22,R23,R24",R_0603_1608Metric,C21190,
+4.3k Resistor,R14,R_0603_1608Metric,C23159,
+TestPoint test point,"TP1,TP2,TP3,TP4",TestPoint_THTPad_D1.5mm_Drill0.7mm,,DNP
+"ST1S14PHR 3A step-down switching regulator, Adjustable Output Voltage, 5.5-48V Input Voltage, 850kHz, PowerSO-8",U1,TI_SO-PowerPAD-8,C84130,
+"S12443 Hamamatsu Linear CMOS Sensor  7 x 125µm, 2496 pixels",U2,s12443,,DNP
+"LM393DR2G Low-Power, Low-Offset Voltage, Dual Comparators, DIP-8/SOIC-8/TO-99-8","U3,U4",SOIC-8_3.9x4.9mm_P1.27mm,C7955,
+74LVC541A 8-bit Buffer/Line Driver 3-state outputs,U5,TSSOP-20_4.4x6.5mm_P0.65mm,C6093,
+Pico ,U6,RPi_Pico_SMD_TH,,DNP
