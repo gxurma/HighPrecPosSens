@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "Sensor CMOS")(type "KiCad")(uri "F:/projects/git/HighPrecPosSens/PCB/symbols/Sensor CMOS.kicad_sym")(options "")(descr ""))
+  (lib (name "MCU_Module")(type "KiCad")(uri "F:/projects/git/HighPrecPosSens/PCB/symbols/MCU_Module.kicad_sym")(options "")(descr ""))
+)
