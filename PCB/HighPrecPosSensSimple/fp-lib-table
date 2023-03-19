@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name "SensorLibrary")(type "KiCad")(uri "F:/projects/git/HighPrecPosSens/PCB/footprints/SensorLibrary.pretty")(options "")(descr ""))
+  (lib (name "Module")(type "KiCad")(uri "F:/projects/git/HighPrecPosSens/PCB/footprints/Module.pretty")(options "")(descr ""))
+)
