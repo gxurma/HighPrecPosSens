@@ -1,13 +1,7 @@
 /****************************************************************************************************************************
-  basic_pwm.ino
-  For RP2040 boards
-  Written by Dr. Benjamin Bird
-  A basic example to get you up and running.
-  Library by Khoi Hoang https://github.com/khoih-prog/RP2040_PWM
-  Licensed under MIT license
-  The RP2040 PWM block has 8 identical slices. Each slice can drive two PWM output signals, or measure the frequency
-  or duty cycle of an input signal. This gives a total of up to 16 controllable PWM outputs. All 30 GPIO pins can be driven
-  by the PWM block
+Uses the HW PWM Module to seamlessly generate 2 pulse signals, one is the clock, one the ST pulse.
+one is 2548x longer than the other. So all the line can be whitnessed first on the scope.
+Needed to tie pin 9 to 10 since the different FRQs can only be handled by separate HW PWM parts of the perifery
 *****************************************************************************************************************************/
 
 #define _PWM_LOGLEVEL_        3
@@ -18,40 +12,67 @@ RP2040_PWM* PWM_Instance;
 RP2040_PWM* PWM_ClkInstance;
 RP2040_PWM* PWM_StInstance;
 
-float frequency;
-float dutyCycle;
+float frequency = 2000; // Um das zu erreichen, braucht Oszillator 125MHz langsam zu sein.
+float frequency2 = 5200000;
 
-#define pinToUse      25
+float dutyCycle = 50;
+float dutyCycle2 = 10;
+
+#define pinToUse      25 
 #define ClkPin        10
 #define StPin         8
+
+String inputString = "";         // a String to hold incoming data
+bool stringComplete = false;  // whether the string is complete
 
 
 void setup()
 {
   //assigns pin 25 (built in LED), with frequency of 20 KHz and a duty cycle of 0%
   PWM_Instance = new RP2040_PWM(pinToUse, 200000, 40);
-  PWM_StInstance = new RP2040_PWM(StPin, 200, 10);
-  PWM_ClkInstance = new RP2040_PWM(ClkPin, 509600, 50);
+  PWM_StInstance = new RP2040_PWM(StPin, frequency, 10);
+  PWM_ClkInstance = new RP2040_PWM(ClkPin, frequency2, dutyCycle);
   PWM_Instance->setPWM();
   PWM_StInstance->setPWM();
   PWM_ClkInstance->setPWM();
+  // initialize serial:
+  Serial.begin(115200);
+  // reserve 200 bytes for the inputString:
+  inputString.reserve(200);  
 }
 
 void loop()
 {
-  delay(1000);
-  frequency = 200;
-  dutyCycle = 90;
+  // print the string when a newline arrives:
+  if (stringComplete) {
+    Serial.println(inputString);
+    // clear the string:
+    inputString = "";
+    stringComplete = false;
+   } 
 
-  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle);
-  PWM_ClkInstance->setPWM(ClkPin, 509600, 49);
-  PWM_StInstance->setPWM(StPin, frequency, 10);
+  PWM_Instance->setPWM(pinToUse, 200000, 90);
+  PWM_ClkInstance->setPWM(ClkPin, frequency2, dutyCycle2);
+  PWM_StInstance->setPWM(StPin, frequency, dutyCycle);
 
-  delay(1000);
-  dutyCycle = 10;
+}
 
-  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle);
-  PWM_ClkInstance->setPWM(ClkPin, 509600, 51);
-  PWM_StInstance->setPWM(StPin, frequency, 20);
-  
+
+/*
+  SerialEvent occurs whenever a new data comes in the hardware serial RX. This
+  routine is run between each time loop() runs, so using delay inside loop can
+  delay response. Multiple bytes of data may be available.
+*/
+void serialEvent() {
+  while (Serial.available()) {
+    // get the new byte:
+    char inChar = (char)Serial.read();
+    // add it to the inputString:
+    inputString += inChar;
+    // if the incoming character is a newline, set a flag so the main loop can
+    // do something about it:
+    if (inChar == '\n') {
+      stringComplete = true;
+    }
+  }
 }
