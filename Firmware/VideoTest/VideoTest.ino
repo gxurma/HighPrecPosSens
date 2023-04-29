@@ -8,7 +8,7 @@ Needed to tie pin 9 to 10 since the different FRQs can only be handled by separa
 #include "RP2040_PWM.h"
 
 //creates pwm instance
-RP2040_PWM* PWM_Instance;
+//RP2040_PWM* PWM_Instance;
 RP2040_PWM* PWM_ClkInstance;
 RP2040_PWM* PWM_StInstance;
 
@@ -66,7 +66,7 @@ void loop()
 
 }
 
-
+/*
 
 void setup1()
 {
@@ -85,3 +85,4 @@ void loop1()
   delay(1000);
   
 }
+*/
