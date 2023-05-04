@@ -12,11 +12,11 @@ Needed to tie pin 9 to 10 since the different FRQs can only be handled by separa
 RP2040_PWM* PWM_ClkInstance;
 RP2040_PWM* PWM_StInstance;
 
-float frequency = 2000; // Um das zu erreichen, braucht Oszillator 125MHz langsam zu sein.
-float frequency2 = 5200000;
+float frequency2 = 2000; // Um das zu erreichen, braucht Oszillator 125MHz langsam zu sein.
+float frequency = 5000000;
 
+float dutyCycle2 = 20;
 float dutyCycle = 50;
-float dutyCycle2 = 10;
 
 #define pinToUse      25 
 #define ClkPin        10
@@ -26,13 +26,15 @@ float dutyCycle2 = 10;
 void setup()
 {
 
-  PWM_StInstance = new RP2040_PWM(StPin, frequency, 10);
-  PWM_ClkInstance = new RP2040_PWM(ClkPin, frequency2, dutyCycle);
+  PWM_StInstance = new RP2040_PWM(StPin, frequency2, dutyCycle2);
+  PWM_ClkInstance = new RP2040_PWM(ClkPin, frequency, dutyCycle);
 
   PWM_StInstance->setPWM();
   PWM_ClkInstance->setPWM();
   // initialize serial:
   Serial.begin(115200);
+  while (Serial.available()) 
+    Serial.read(); //just to flush first the buffer
 }
 
 void loop()
