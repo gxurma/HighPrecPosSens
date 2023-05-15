@@ -33,6 +33,7 @@ int readercounter = 2600;
 		while(true)
 		{
 			//printf("entered loop \n");
+
 			while(!pio_interrupt_get(pio0,1))  //wait till we started cycle
 				printf(".");
 			printf("\r");
@@ -43,19 +44,21 @@ int readercounter = 2600;
 				//printf("data = %d \n",dataIn[i]);
 				if (dataIn[i] == readercounter) //look for the known end pattern
 				{
-					printf(" :%d: ",i);
+					printf(" :%d: \n",i);
 					break;
 				}	
 			}
 			//printf("filled datain \n");
-			for(k = 0;k<i;k=k+1)
+			for(k = 0;k<=i;k=k+1)
 			{
 				tmp = dataIn[k];
+				
 				/*if (tmp == readercounter) //look for the known pattern
 				{
 					printf("end\n");
 					continue;
 				}*/
+				/*
 				for(j = 0;j<8; j++ )
 				{
 					bits = tmp & 0xf;
@@ -72,10 +75,12 @@ int readercounter = 2600;
 					else 
 						tmpstring[j] = 'x'; //something strange came in
 					tmp = tmp >> 4;
-				}
+				}*/
 
 				//printf("%8s ",tmpstring);
+				printf("%08X ",tmp);
 			}
+			printf("\n");
 		};
  	};
 
@@ -112,8 +117,8 @@ int main() {
     printf("Loaded pwm program at %d\n", offset);
     printf("Loaded reader program at %d\n", offsetReader);
 
+    pwm_program_init(pio, sm0, offset, STPin, ClkPin);
 	reader_program_init(pio, sm1, offsetReader, ClkPin, DataPins);
-    pwm_program_init(pio, sm0, offset, STPin);
 
     int level = 1000;
     int period = 2600;
@@ -122,7 +127,7 @@ int main() {
     pio_pwm_set_level(pio, sm0, level);
 	pio_pwm_set_level(pio, sm1, readercounter); 
 
-	printf("pio initialized starting core1\n");
+	printf("pio initialized, starting core1\n");
 	multicore_launch_core1(core1_main);
 	printf("core1 started\n");
 
