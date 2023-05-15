@@ -1,0 +1,84 @@
+;
+; Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+;
+; SPDX-License-Identifier: BSD-3-Clause
+;
+
+; Side-set pin 0 is used for PWM output
+
+.program pwm
+.side_set 1 opt
+
+    pull noblock    side 0 ; Pull from FIFO to OSR if available, else copy X to OSR.
+    mov x, osr             ; Copy most-recently-pulled value back to scratch X
+    mov y, isr             ; ISR contains PWM period. Y used as counter.
+    irq 1                  ; notify the reader sm that we just started
+countloop:
+    jmp x!=y noset         ; Set pin high if X == Y, keep the two paths length matched
+    jmp skip        side 1
+noset:
+    nop                    ; Single dummy cycle to keep the two paths the same length
+skip:
+    jmp y-- countloop      ; Loop until Y hits 0, then pull a fresh PWM value from FIFO
+
+% c-sdk {
+#include "hardware/clocks.h"
+static inline void pwm_program_init(PIO pio, uint sm, uint offset, uint pin) {
+   pio_gpio_init(pio, pin);
+   pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
+   pio_sm_config c = pwm_program_get_default_config(offset);
+   sm_config_set_sideset_pins(&c, pin);
+
+   float div = clock_get_hz(clk_sys) / 10000000 ;  // calculates the clock divider
+   sm_config_set_clkdiv(&c, div);
+
+   pio_sm_init(pio, sm, offset, &c);
+
+   // Set the state machine running
+   pio_sm_set_enabled(pio, sm, true);
+
+}
+%}
+
+; here side is the clock, and pins are the 4 digital input pins used
+; need to enable autopush, dma and joint fifo 
+.program reader
+.side_set 1                     ; mandatory side sets
+
+    pull noblock    side 0      ; we get the counts setting of data over the fifo 
+    mov x, osr   side 0         ; just save counter to x scratch register to reuse it if pull is doing mov osr,x
+    mov y, x     side 0         ; set counter to desired amount of how much we want to sample
+    wait 1 irq 1 side 0 [2]     ; wait till start of new PWM cycle(falling edge) from PWM sm0, and then delay 2 cycles, so we are sampling in correct position
+ide:
+    in pins, 4   side 1  [1]    ; we shift in all 4 pins at once
+    jmp y-- ide  side 0  [1]    ; decrement counter and jump back to label ide:
+    push noblock  side 0        ; push whatever is in the isr so we start a fresh, aligned cycle
+    mov  isr, x  side 0        ; set a known pattern to notify the core1 we have finished
+    push noblock  side 0        ; push the isr again
+
+% c-sdk {
+#include "hardware/clocks.h"
+static inline void reader_program_init(PIO pio, uint sm, uint offset, uint clkpin, uint datapins) {
+   pio_gpio_init(pio, clkpin);
+   pio_gpio_init(pio, datapins);
+   pio_gpio_init(pio, datapins+1);
+   pio_gpio_init(pio, datapins+2);
+   pio_gpio_init(pio, datapins+3);
+   
+   pio_sm_set_consecutive_pindirs(pio, sm, datapins, 4, false);
+   pio_sm_set_consecutive_pindirs(pio, sm, clkpin, 1, true);
+
+   pio_sm_config c = reader_program_get_default_config(offset);
+   sm_config_set_sideset_pins(&c, clkpin);
+   sm_config_set_in_pins(&c, datapins);
+   float div = clock_get_hz(clk_sys) / 10000000 ;  // calculates the clock divider
+   sm_config_set_clkdiv(&c, div);
+   sm_config_set_in_shift(&c, true, true, 32 ) ; // right shifting, autopush, 32 bits 
+   
+   //sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);
+   pio_sm_init(pio, sm, offset, &c);
+   // Set the state machine running
+   pio_sm_set_enabled(pio, sm, true);
+}
+%}
+
