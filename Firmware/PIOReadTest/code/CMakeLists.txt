@@ -4,7 +4,7 @@ add_executable(code
 pico_generate_pio_header(code ${CMAKE_CURRENT_LIST_DIR}/PIOReadTest.pio)
 
 
-target_link_libraries(code PRIVATE pico_stdlib hardware_pio pico_multicore)
+target_link_libraries(code PRIVATE pico_stdlib hardware_pio pico_multicore hardware_dma)
 
 pico_enable_stdio_uart(code 0)
 pico_enable_stdio_usb(code 1)
