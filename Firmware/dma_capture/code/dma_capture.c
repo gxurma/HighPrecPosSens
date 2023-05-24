@@ -86,6 +86,7 @@ int main() {
     channel_config_set_dreq(&cfg, DREQ_ADC);
 while(true)
 {
+    int i;
     dma_channel_configure(dma_chan, &cfg,
         capture_buf,    // dst
         &adc_hw->fifo,  // src
@@ -107,25 +108,25 @@ while(true)
     int startpos = 0;
 
     // Print samples to stdout so you can display them in pyplot, excel, matlab
-    for (int i = 0; i < CAPTURE_DEPTH; ++i) {
+    /*for (int i = 0; i < CAPTURE_DEPTH; ++i) {
         tmp = capture_buf[i];
         if ((tmp >= 55)&& once) //synchronisation not perfect, need to find first sample
-        {  
-            printf("\n Startpos: %d \n DataStart:", i);
+        {  */
+            printf("\n Startpos: %d \n DataStart:", i);/*
             once = false;
             startpos = i;
         }
 
         if (!once ) //&& i< (startpos + 2497))
-        {    //printf("%02X;", tmp);
-            fwrite(&capture_buf[startpos],1,2497, stdout); //debug to usb
-            break;
+        {    //printf("%02X;", tmp);*/
+            fwrite(capture_buf,1,CAPTURE_DEPTH, stdout); //debug to usb
+      /*      break;
         }
-
+*/
         
         // if (i % 60 == 59)
             // printf("\n");
-    }
+ //   }
     printf(":DataEnd\n");
 
 char dummy[12];
