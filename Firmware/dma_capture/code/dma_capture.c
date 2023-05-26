@@ -35,9 +35,9 @@
 
 // Channel 0 is GPIO26
 #define CAPTURE_CHANNEL 2
-#define CAPTURE_DEPTH 5200
+int CAPTURE_DEPTH = 3000;
 
-uint8_t capture_buf[CAPTURE_DEPTH];
+uint8_t capture_buf[6000];
 
 bool Capturing = false;
 
@@ -84,9 +84,11 @@ int main() {
 
     // Pace transfers based on availability of ADC samples
     channel_config_set_dreq(&cfg, DREQ_ADC);
+    adc_run(true);
 while(true)
 {
     int i;
+    // printf("Starting capture\n");
     dma_channel_configure(dma_chan, &cfg,
         capture_buf,    // dst
         &adc_hw->fifo,  // src
@@ -94,15 +96,14 @@ while(true)
         true            // start immediately
     );
 
-    printf("Starting capture\n");
-    adc_run(true);
+    Capturing = true;
 
     // Once DMA finishes, stop any new conversions from starting, and clean up
     // the FIFO in case the ADC was still mid-conversion.
     dma_channel_wait_for_finish_blocking(dma_chan);
-    printf("Capture finished\n");
-    adc_run(false);
-    adc_fifo_drain();
+    // adc_run(false);
+    // adc_fifo_drain();
+    // // printf("Capture finished\n");
 
     bool once = true;
     int startpos = 0;
@@ -120,6 +121,7 @@ while(true)
         if (!once ) //&& i< (startpos + 2497))
         {    //printf("%02X;", tmp);*/
             fwrite(capture_buf,1,CAPTURE_DEPTH, stdout); //debug to usb
+            fflush(stdout);
       /*      break;
         }
 */
@@ -130,8 +132,8 @@ while(true)
     printf(":DataEnd\n");
 
 char dummy[12];
-scanf("%s",dummy);
-Capturing = true;
+scanf("%d",&CAPTURE_DEPTH);
+
 }
 }
 
@@ -142,13 +144,14 @@ Capturing = true;
 // consistent sample frequency.
 
 #define OUTPUT_FREQ_HZ 1000000
-#define OUT_SAMPLES 325
+#define OUT_SAMPLES 2591
+#define STLength 100
+
 // This is the green channel on the VGA board
 #define OUTPUT_PIN_BASE 8
 
 #define ONPHASE 6
 
-uint32_t OutSamples[OUT_SAMPLES];
 
 void core1_main() {
     PIO pio = pio0;
@@ -156,19 +159,13 @@ void core1_main() {
     uint offset = pio_add_program(pio0, &resistor_dac_2bit_program);
     resistor_dac_2bit_program_init(pio0, sm, offset, OUTPUT_FREQ_HZ, OUTPUT_PIN_BASE);
     // int counter = 0;
-    int i;
-    for(i=0; i<ONPHASE; i++)
-        OutSamples[i] = 0xDDDDDDDD;
-    for(i=ONPHASE;i<OUT_SAMPLES;i++)
-        OutSamples[i] = 0x88888888;
 
 
     while (true) {
         if (Capturing)
         {
             // outputting signal
-            for (i = 0; i < OUT_SAMPLES; ++i)
-                pio_sm_put_blocking(pio, sm, OutSamples[i]);
+            pio_sm_put_blocking(pio, sm, (STLength << 16) + OUT_SAMPLES );  //Start Pio SM to output one read cycle
             Capturing = false; // only capture once
         }
     }

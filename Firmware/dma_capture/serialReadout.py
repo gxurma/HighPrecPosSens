@@ -3,16 +3,16 @@ import time
 from matplotlib import pyplot as plt
 
 s = serial.Serial('COM6')  #adjust port to your needs
-
-message = "s\n"
+plt.ion()
+message = "2700\n"
 while(True) :
     s.write(message.encode())
 
-    res = s.readline()
+  #  res = s.readline()
 
     # print(res)
 
-    res = s.readline()
+ #   res = s.readline()
 
     # print(res)
 
@@ -29,12 +29,15 @@ while(True) :
     t= range(len(res))
     a= list(res)
 
-    plt.plot(t[11:-10],a[11:-10]);
-    print(a)
+  #  print(a)
+    plt.cla()
+    plt.plot(t[11:-10],a[11:-10],visible=True)
+    xmin,xmax,ymin,ymax = plt.axis()
     plt.show()
-    # print(res.length() )
+    plt.pause(0.1)
+    print(len(a) )
+    print(xmin,xmax,ymin,ymax)
 
-
-    time.sleep(0.1)
+    # time.sleep(0.5)
 
 s.close()
