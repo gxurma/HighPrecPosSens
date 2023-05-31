@@ -7,6 +7,7 @@ from calibrationfile import amin, amax
 calibrating = False
 
 position = 0
+cutoff = 35
 
 aold = []
 k=0.995
@@ -41,12 +42,13 @@ while(True) :
  
     t= range(len(res))
     a= list(res)
-    t = t[180:-53]
-    a= a[180:-53]
+    t = t[200:-54]
+    a= a[200:-54]
     if first :
-        # amax = a.copy()
+        if calibrating:
+            amax = a.copy()
+            amin = a.copy()
         aold = a.copy()
-        # amin = a.copy()
         c = a.copy()
         cold = a.copy()
         cavg = a.copy()
@@ -54,8 +56,8 @@ while(True) :
         print(first)
 
     # print(a)
-    # plt.cla()
-    # plt.plot(t,a)
+    plt.cla()
+    plt.plot(t,a)
     # xmin,xmax,ymin,ymax = plt.axis()
     # print(len(a) )
     # print(xmin,xmax,ymin,ymax)
@@ -72,8 +74,8 @@ while(True) :
                 amin[i] = a[i]
             if (a[i] > amax[i]) :
                 amax[i] = a[i]
-    # plt.plot(t, amin)
-    # plt.plot(t, amax)
+    plt.plot(t, amin)
+    plt.plot(t, amax)
 
     # print(amin[0:40])
 
@@ -86,7 +88,7 @@ while(True) :
     # print( c[0:40])
     # print(amin[0:40])
 
-    # plt.plot(t, c)
+    plt.plot(t, c)
     # plt.plot(t, cold)
     # plt.plot(t, cavg)
 
@@ -95,26 +97,41 @@ while(True) :
     
     # plt.plot(t, np.abs(f))
     # plt.plot(t, g)
-    d = np.correlate(c,cold,mode="full")
+    # d = np.correlate(c,cold,mode="full")
     
-    # plt.plot(d/5000)
+    # c = c*np.bartlett(len(c))
+    G_a = np.fft.fft(c)
+    G_a[cutoff:-cutoff] = 0
+    # plt.plot(np.fft.ifft(G_a))
+    # plt.plot(c)
     
-    
+    G_b = np.fft.fft(cold)
+    G_b[cutoff:-cutoff] = 0
+    # plt.plot(G_b[1:200])
 
-    delta = (int) (np.argmax(d)-len(d)/2)
+    G_b_conj= np.conjugate(G_b)
+    r = G_a*G_b_conj
+    d = np.fft.ifft(r)
+    # plt.plot(d)
+
+    delta = (int) (np.argmax(d))
+    if delta > len(d)/2 :
+        delta = delta -len(d)
     position = position + delta
-    print("%d %8d %8d"%(len(d), delta, position), end="\r")
+    print("%d %8d %8d"%(counter, delta, position), end="\r")
 
     # aold = a
-    # plt.show()
-    # plt.pause(0.01)
-    # if (counter > 600):
-    #   break
-    # else:
-    #     counter = counter +1
+    plt.show()
+    plt.pause(0.005)
+    if calibrating :
+        if (counter > 600):
+            break
+        else:
+            counter = counter +1
+    # time.sleep(0.005)
 
 s.close()
 
-# print("amin = ", amin)
-# print("amax = ", amax)
+print("amin = ", amin)
+print("amax = ", amax)
 
