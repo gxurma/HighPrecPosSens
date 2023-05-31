@@ -7,13 +7,14 @@ from calibrationfile import amin, amax
 calibrating = False
 
 position = 0
-cutoff = 35
+cutoff = 40
 
 aold = []
 k=0.995
 c = []
 cavg = []
 cold = []
+e = []
 counter = 0
 s = serial.Serial('COM6')  #adjust port to your needs
 plt.ion()
@@ -52,12 +53,14 @@ while(True) :
         c = a.copy()
         cold = a.copy()
         cavg = a.copy()
+        e = a.copy()
+        e[-1]=0
         first = False
         print(first)
 
     # print(a)
-    plt.cla()
-    plt.plot(t,a)
+    # plt.cla()
+    # plt.plot(t,a)
     # xmin,xmax,ymin,ymax = plt.axis()
     # print(len(a) )
     # print(xmin,xmax,ymin,ymax)
@@ -74,8 +77,8 @@ while(True) :
                 amin[i] = a[i]
             if (a[i] > amax[i]) :
                 amax[i] = a[i]
-    plt.plot(t, amin)
-    plt.plot(t, amax)
+    # plt.plot(t, amin)
+    # plt.plot(t, amax)
 
     # print(amin[0:40])
 
@@ -88,7 +91,10 @@ while(True) :
     # print( c[0:40])
     # print(amin[0:40])
 
-    plt.plot(t, c)
+    # plt.plot(t, c)
+    # for j in range(len(a)-1):
+    #     e[j] = c[j]-c[j+1]
+    # plt.plot(t, e)
     # plt.plot(t, cold)
     # plt.plot(t, cavg)
 
@@ -112,17 +118,18 @@ while(True) :
     G_b_conj= np.conjugate(G_b)
     r = G_a*G_b_conj
     d = np.fft.ifft(r)
+    # plt.plot(r[1:100])
     # plt.plot(d)
 
     delta = (int) (np.argmax(d))
     if delta > len(d)/2 :
         delta = delta -len(d)
     position = position + delta
-    print("%d %8d %8d"%(counter, delta, position), end="\r")
+    print("%8d %8d %05.3f"%(delta, position, position*0.007), end="\r")
 
     # aold = a
-    plt.show()
-    plt.pause(0.005)
+    # plt.show()
+    # plt.pause(0.01)
     if calibrating :
         if (counter > 600):
             break
