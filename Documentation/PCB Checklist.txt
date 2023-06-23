@@ -22,5 +22,7 @@ v1.0, {docdate}: valami
 * [ ] Set net classes to power and signal
 * [ ] Logo!
 * [ ] Testpunkte!
+* [ ] Via bohrdurchmesser checken und alle einheitlich anpassen
 * [ ] Stecker Footprints checken - Male / Female
 * [ ] Layer Stackup Beschreibung einfügen (Lagendicken, material etc.)
+* [ ] DRC Regeln einstellen und durchführen
