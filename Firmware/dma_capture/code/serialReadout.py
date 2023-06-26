@@ -2,13 +2,19 @@ import serial
 import time
 from matplotlib import pyplot as plt
 import numpy as np
-from calibrationfile import amin, amax
+from calibrationfile import amin, amax, b
 
 calibrating = False
+aufnahme = False
+wiedergabe = False
+doplot = True
 
+
+deltamin = 3000
+deltamax = 0
+cutoff = 300
+print(cutoff)
 position = 0
-cutoff = 40
-
 aold = []
 k=0.995
 c = []
@@ -16,35 +22,66 @@ cavg = []
 cold = []
 e = []
 counter = 0
-s = serial.Serial('COM6')  #adjust port to your needs
-plt.ion()
+maxindexold1 = 1024 
+maxindexold2 = 1024
+maxindex1 = 1024
+maxindex2 = 1024
+
+if not wiedergabe:
+    s = serial.Serial('COM6')  #adjust port to your needs
+
+if doplot : plt.ion()
 message = "2700\n"
 first = True
+
+if aufnahme: 
+    flog = open("Aufnahme14e e e.txt","bw")
+if wiedergabe:
+    flog = open("Aufnahme14e e e.txt","br")
+
+
 while(True) :
-    s.write(message.encode())
 
-  #  res = s.readline()
+    # if (counter > 1353) and (counter < 1361): doplot = True
+    # if (position > 12500) and (position < 14000): doplot = True
+    # else : doplot = False 
 
-    # print(res)
+    if not wiedergabe:
+        s.write(message.encode())
 
- #   res = s.readline()
+        res = s.readline()
 
-    # print(res)
+        # print(res)
 
-    res = s.readline()
+        res = s.readline()
 
-    # print(res)
+        # print(res)
 
-    res = s.readline()
+        res = s.readline()
 
-    # print(res.decode() )
+        # print(res)
 
-    res = s.readline()
- 
+    else : # if wiedergabe:
+        res = flog.readline()
+        if len(res) == 0 :  break
+
+    if aufnahme :
+        flog.write(res)
+        flog.flush()
+    
+    counter = counter +1
+    
+    if counter < 10 : 
+        continue
+
     t= range(len(res))
     a= list(res)
-    t = t[200:-54]
-    a= a[200:-54]
+    # t = t[200:-54]
+    # a= a[200:-54]
+    t = t[200:2248]
+    a= a[200:2248]
+    # print (len(t), len(a))
+
     if first :
         if calibrating:
             amax = a.copy()
@@ -59,14 +96,17 @@ while(True) :
         print(first)
 
     # print(a)
-    # plt.cla()
-    # plt.plot(t,a)
-    # xmin,xmax,ymin,ymax = plt.axis()
+    if not aufnahme:
+        if doplot : plt.figure(1)
+        if doplot : plt.cla()
+    # fig, (ax1,ax2) = if doplot : plt.subplots(2)
+        if doplot : plt.plot(t,a)
+    # xmin,xmax,ymin,ymax = if doplot : plt.axis()
     # print(len(a) )
     # print(xmin,xmax,ymin,ymax)
     # print(a[174:-53])
     # b = np.convolve(a,aold)
-    # plt.plot(b/100000)
+    # if doplot : plt.plot(b/100000)
     # time.sleep(0.5)
 
     # print(a[0:40])
@@ -77,68 +117,141 @@ while(True) :
                 amin[i] = a[i]
             if (a[i] > amax[i]) :
                 amax[i] = a[i]
-    # plt.plot(t, amin)
-    # plt.plot(t, amax)
+    if not aufnahme:
+        if doplot : plt.plot(t, amin)
+        if doplot : plt.plot(t, amax)
 
     # print(amin[0:40])
 
-
+    # Aufbereitung
     for j in range(len(a)):
         cold[j] = c[j]
-        c[j] = (a[j] - amin[j])
+        try:
+            c[j] = (a[j] - amin[j])/(amax[j]-amin[j])*100 - 50
+        except:
+            None
         # cavg[j] = k*cavg[j]+(1-k)*c[j]
         #print(c[j], a[j],amin[j], end=" : ")   
     # print( c[0:40])
     # print(amin[0:40])
 
-    # plt.plot(t, c)
+    if not aufnahme:
+
+        if doplot : plt.plot(t, c)
+        if doplot : plt.plot(t, cold)
+
     # for j in range(len(a)-1):
     #     e[j] = c[j]-c[j+1]
-    # plt.plot(t, e)
-    # plt.plot(t, cold)
-    # plt.plot(t, cavg)
+    # if doplot : plt.plot(t, e)
+    # if doplot : plt.plot(t, cold)
+    # if doplot : plt.plot(t, cavg)
 
     # f = np.fft.fft(c)
     # print(np.abs(f)[1:20])
     
-    # plt.plot(t, np.abs(f))
-    # plt.plot(t, g)
+    # if doplot : plt.plot(t, np.abs(f))
+    # if doplot : plt.plot(t, g)
     # d = np.correlate(c,cold,mode="full")
     
     # c = c*np.bartlett(len(c))
     G_a = np.fft.fft(c)
     G_a[cutoff:-cutoff] = 0
-    # plt.plot(np.fft.ifft(G_a))
-    # plt.plot(c)
+    G_a[0] = 0  # keine DC Komponenten
+
     
     G_b = np.fft.fft(cold)
+    # G_b = np.fft.fft(b)
     G_b[cutoff:-cutoff] = 0
-    # plt.plot(G_b[1:200])
+    G_b[0] = 0 # keine DC komponenten
+    # if doplot : plt.plot(G_b[1:200])
+
+    # e = (np.fft.ifft(G_a) > 0)*50
+    if not aufnahme:
+
+        if doplot : plt.plot(t,np.fft.ifft(G_a))
+        if doplot : plt.plot(t,np.fft.ifft(G_b))
+
 
     G_b_conj= np.conjugate(G_b)
     r = G_a*G_b_conj
     d = np.fft.ifft(r)
-    # plt.plot(r[1:100])
-    # plt.plot(d)
+    # if doplot : plt.plot(r[1:100])
 
-    delta = (int) (np.argmax(d))
-    if delta > len(d)/2 :
-        delta = delta -len(d)
-    position = position + delta
-    print("%8d %8d %05.3f"%(delta, position, position*0.007), end="\r")
+
+
+    if not aufnahme:
+        if doplot : plt.figure(2)
+        if doplot : plt.cla()
+
+    h = list(d[int(len(d)/2):])
+    # print(len(h))
+    # if doplot : plt.plot(h)
+
+    j = list(d[:int(len(d)/2)])
+    # print(len(j))
+    k = h+j
+    # h = d[int(len(d)/2):] + d[:int(len(d)/2)]
+
+    # if doplot : plt.plot(j)
+    # if doplot : plt.plot(range(deltamin,deltamax),k[deltamin:deltamax])
+    if doplot : plt.plot(k)
+
+
+    maxindexold1 = maxindex1
+    maxindexold2 = maxindex2
+
+    maxindex1 = (int) (np.argmax(k[:1024]))
+    maxindex2 = (int) (np.argmax(k[1024:])) + 1024
+
+
+    # if delta > len(d)/2 :
+    #     delta = delta -len(d)
+    
+    # if maxindex < deltamin : deltamin = maxindex
+    # if maxindex > deltamax : deltamax = maxindex
+
+    # feininterpolation
+    # polynoma = np.abs(k[maxindex-2:maxindex+3])
+    # polynomt = list(range(maxindex-2,maxindex+3))
+    # p = np.polyfit(polynomt,polynoma,2)
+    # x = -p[1]/p[0]/2
+    # # print(polynoma, polynomt, p, x, maxindex)
+
+    # delta = len(d)/2 - x
+
+    delta1 = len(d)/2 - maxindex1
+    delta2 = maxindex2 - len(d)/2
+
+    position = position + delta2
+    print("%08d %8d %8d %8d %8d %8.5f %8.5f"%(counter, maxindex1, maxindex2, delta1, delta2, position, position*0.007),end="\r")
 
     # aold = a
-    # plt.show()
-    # plt.pause(0.01)
+
+    # if doplot : plt.figure(3)
+    # if doplot : plt.cla()
+    # if doplot : plt.plot(abs(G_a[0:cutoff]))
+
+    if not aufnahme:
+        if doplot : plt.show()
+        if doplot : plt.pause(0.05)
+        
+
     if calibrating :
-        if (counter > 600):
+        if (counter > 1550):
             break
-        else:
-            counter = counter +1
     # time.sleep(0.005)
 
-s.close()
+if not wiedergabe :
+    s.close()
+if aufnahme or wiedergabe :
+    flog.close()
 
-print("amin = ", amin)
-print("amax = ", amax)
+if calibrating :
 
+    calibf = open("calibrationfile.py","w")
+    print("amin = ", amin, file=calibf)
+    print("amax = ", amax, file=calibf)
+    print("b = ",    b,    file=calibf)
+    calibf.flush()
+    calibf.close()
+print()
